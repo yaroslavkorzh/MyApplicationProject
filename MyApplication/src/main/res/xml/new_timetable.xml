@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<data>
+    <lectures>
+        <record name="Лекция по математике" type="Лекция" subject="Математика" place="30-211"
+            day="Понедельник" start_time="12:20" end_time="13:55" week="чёрный"/>
+        <record name="Лекция по физике" type="Лекция" subject="Физика" place="7-105"
+            day="Вторник" start_time="12:20" end_time="13:55" week="чёрный"/>
+        <record name="Лекция по праву" type="Лекция" subject="Право" place="30-511"
+            day="Среда" start_time="12:20" end_time="13:55" week="чёрный"/>
+        <record name="Физкульутра" type="Практика" subject="Физкультура" place="28"
+            day="Четверг" start_time="12:20" end_time="15:50" week="чёрный"/>
+        <record name="Лекция по математике" type="Лекция" subject="Математика" place="30-211"
+            day="Пятница" start_time="12:20" end_time="13:55" week="чёрный"/>
+
+    </lectures>
+    <tasks>
+        <task name="" type="" subject="" submit_date="" comment="" />
+
+
+    </tasks>
+    <subjects>
+        <subject name="" lector="" lector_contacts="" />
+    </subjects>
+</data>

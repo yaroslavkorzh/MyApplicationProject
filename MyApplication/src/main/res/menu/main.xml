@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+tools:context=".MainActivity" >
+
+    <item android:id="@+id/settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/import_timetable"
+        android:title="@string/action_import"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/add_timetable_item"
+        android:title="@string/add_timetable_item"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/add_tasks_item"
+        android:title="@string/add_tasks_item"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/add_subjects_item"
+        android:title="@string/add_subjects_item"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

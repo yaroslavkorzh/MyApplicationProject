@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_myapplicationproject" default="compile.module.myapplicationproject">
+  <dirname property="module.myapplicationproject.basedir" file="${ant.file.module_myapplicationproject}"/>
+  
+  <property name="module.jdk.home.myapplicationproject" value="${jdk.home.android_api_19_platform}"/>
+  <property name="module.jdk.bin.myapplicationproject" value="${jdk.bin.android_api_19_platform}"/>
+  <property name="module.jdk.classpath.myapplicationproject" value="jdk.classpath.android_api_19_platform"/>
+  
+  <property name="compiler.args.myapplicationproject" value="${compiler.args}"/>
+  
+  <property name="myapplicationproject.output.dir" value="${module.myapplicationproject.basedir}/build/classes/production/MyApplicationProject"/>
+  <property name="myapplicationproject.testoutput.dir" value="${module.myapplicationproject.basedir}/build/classes/test/MyApplicationProject"/>
+  
+  <path id="myapplicationproject.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="myapplicationproject.module.production.classpath">
+    <path refid="${module.jdk.classpath.myapplicationproject}"/>
+  </path>
+  
+  <path id="myapplicationproject.runtime.production.module.classpath">
+    <pathelement location="${myapplicationproject.output.dir}"/>
+  </path>
+  
+  <path id="myapplicationproject.module.classpath">
+    <path refid="${module.jdk.classpath.myapplicationproject}"/>
+    <pathelement location="${myapplicationproject.output.dir}"/>
+  </path>
+  
+  <path id="myapplicationproject.runtime.module.classpath">
+    <pathelement location="${myapplicationproject.testoutput.dir}"/>
+    <pathelement location="${myapplicationproject.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.myapplicationproject">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.myapplicationproject">
+    <patternset refid="excluded.from.module.myapplicationproject"/>
+  </patternset>
+  
+  <path id="myapplicationproject.module.sourcepath">
+    <dirset dir="${module.myapplicationproject.basedir}">
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.myapplicationproject" depends="compile.module.myapplicationproject.production,compile.module.myapplicationproject.tests" description="Compile module MyApplicationProject"/>
+  
+  <target name="compile.module.myapplicationproject.production" depends="register.custom.compilers" description="Compile module MyApplicationProject; production classes">
+    <mkdir dir="${myapplicationproject.output.dir}"/>
+    <javac2 destdir="${myapplicationproject.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.myapplicationproject}/javac">
+      <compilerarg line="${compiler.args.myapplicationproject}"/>
+      <bootclasspath refid="myapplicationproject.module.bootclasspath"/>
+      <classpath refid="myapplicationproject.module.production.classpath"/>
+      <src refid="myapplicationproject.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.myapplicationproject"/>
+    </javac2>
+    
+    <copy todir="${myapplicationproject.output.dir}">
+      <fileset dir="${module.myapplicationproject.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.myapplicationproject.tests" depends="register.custom.compilers,compile.module.myapplicationproject.production" description="compile module MyApplicationProject; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.myapplicationproject" description="cleanup module">
+    <delete dir="${myapplicationproject.output.dir}"/>
+    <delete dir="${myapplicationproject.testoutput.dir}"/>
+  </target>
+</project>

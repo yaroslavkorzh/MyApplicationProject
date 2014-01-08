@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello_world">Hello world!</string>
+    <string name="app_name">iStudy</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_import">Import</string>
+    <string name="add_timetable_item">Add lesson</string>
+    <string name="add_tasks_item">Add task</string>
+    <string name="add_subjects_item">Add subject</string>
+
+
+    <string name="actv_Title">Название</string>
+    <string name="actv_Type">Тип занятия</string>
+    <string name="actv_Subject">Предмет</string>
+    <string name="actv_Place">Место проведения</string>
+    <string name="actv_Lector">Преподаватель</string>
+
+    <string name="lector_contacts">Контакты преподавателя</string>
+
+    <string name="ok_button">Ok</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="bgr_choice" color="#559966CC">Выбрать</string>
+    <string name="delete_record">Delete record</string>
+    <string name="add_record">Add record</string>
+
+
+    <string name="text_tab1">Это первая вкладка</string>
+        <string name="text_tab2">Это вторая вкладка</string>
+        <string name="text_tab3">Это третья вкладка</string>
+        <string name="text_tab_header">Свой заголовок</string>
+
+    <string-array name="days">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+   </string-array>
+
+    <string name="DATABASE_NAME">App_database</string>
+
+</resources>
