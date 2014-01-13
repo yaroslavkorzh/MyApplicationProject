@@ -8,7 +8,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2">
+        android:id="@+id/linearLayout2" >
 
         <LinearLayout
             android:orientation="vertical"
@@ -25,8 +25,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Занятие"
-                    android:id="@+id/lessonName"
+                    android:text="Задание"
+                    android:id="@+id/taskName"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
 
@@ -40,16 +40,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Предмет"
-                    android:id="@+id/lessonSubject"
+                    android:text="Тип"
+                    android:id="@+id/taskType"
                     android:layout_marginLeft="50dp"
                     android:layout_margin="10dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Аудитория"
-                    android:id="@+id/lessonAuditory"
+                    android:text="Предмет"
+                    android:id="@+id/taskSubject"
                     android:layout_marginLeft="10dp"
                     android:layout_margin="10dp" />
 
@@ -57,29 +57,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="День"
-                    android:id="@+id/lessonDay"
+                    android:text="Дата сдачи"
+                    android:id="@+id/taskDueDate"
                     android:layout_marginLeft="50dp"
                     android:layout_margin="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="200dp"
+                    android:layout_height="75dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Начало"
-                    android:id="@+id/lessonStart"
+                    android:text="Комментарий"
+                    android:id="@+id/taskComment"
                     android:layout_marginLeft="50dp"
                     android:layout_margin="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Конец"
-                    android:id="@+id/lessonEnd"
-                    android:layout_marginLeft="50dp"
-                    android:layout_margin="10dp" />
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

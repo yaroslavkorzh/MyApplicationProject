@@ -15,11 +15,17 @@
 
     </lectures>
     <tasks>
-        <task name="" type="" subject="" submit_date="" comment="" />
-
+        <task name="Курсовая по рунологии" type="курсовая" subject="Рунология" submit_date="12.06.2020" comment="Руны в повседневности" />
+        <task name="Расчетка по вышке" type="Математика" subject="Физика" submit_date="12.01.2014" comment="" />
+        <task name="Лабораторная по БД" type="" subject="Базы данных" submit_date="16.01.2014" comment="" />
 
     </tasks>
     <subjects>
-        <subject name="" lector="" lector_contacts="" />
+        <subject name="Физика" lector="Немировский" lector_contacts="За пиво" />
+        <subject name="Физкультура" lector="Агеев" lector_contacts="" />
+        <subject name="Математика" lector="Федорова Лидия Борисовна" lector_contacts="" />
+        <subject name="Право" lector="Зинченко" lector_contacts="" />
+        <subject name="Базы данных" lector="Штогринатор" lector_contacts="skype" />
+        <subject name="Рунология" lector="Один" lector_contacts="одноглазый" />
     </subjects>
 </data>

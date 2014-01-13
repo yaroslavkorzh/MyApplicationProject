@@ -1,6 +1,24 @@
 package com.example.myapplication;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
+import android.view.View;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ListView;
+import java.util.concurrent.TimeUnit;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
+//import android.widget.SimpleCursorAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,143 +32,109 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class timetable extends  Activity {
-    String[] name = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
-            "Костя", "Игорь" };
-    String[] position = { "Программер", "Бухгалтер", "Программер",
-            "Программер", "Бухгалтер", "Директор", "Программер", "Охранник" };
-    int salary[] = { 13000, 10000, 13000, 13000, 10000, 15000, 13000, 8000 };
-
-    int[] colors = new int[2];
-
-
-    // названия компаний (групп)
-    String[] groups = new String[] {"HTC", "Samsung", "LG"};
-
-    // названия телефонов (элементов)
-    String[] phonesHTC = new String[] {"Sensation", "Desire", "Wildfire", "Hero"};
-    String[] phonesSams = new String[] {"Galaxy S II", "Galaxy Nexus", "Wave"};
-    String[] phonesLG = new String[] {"Optimus", "Optimus Link", "Optimus Black", "Optimus One"};
-
-    // коллекция для групп
-    ArrayList<Map<String, String>> groupData;
-
-    // коллекция для элементов одной группы
-    ArrayList<Map<String, String>> childDataItem;
-
-    // общая коллекция для коллекций элементов
-    ArrayList<ArrayList<Map<String, String>>> childData;
-    // в итоге получится childData = ArrayList<childDataItem>
-
-    // список аттрибутов группы или элемента
-    Map<String, String> m;
-
-    ExpandableListView expandableListView;
-
-
+public class timetable extends FragmentActivity implements LoaderCallbacks<Cursor> {
+    private static final int CM_DELETE_ID = 1;
+    ListView lvData;
+    SimpleCursorAdapter scAdapter;
+    Cursor cursor;
+    DB db;
+    final String LOG_TAG = "myLogs";
+    /** Called when the activity is first created. */
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timetable);
-
-
-
-        // заполняем коллекцию групп из массива с названиями групп
-        groupData = new ArrayList<Map<String, String>>();
-        for (String group : groups) {
-            // заполняем список аттрибутов для каждой группы
-            m = new HashMap<String, String>();
-            m.put("groupName", group); // имя компании
-            groupData.add(m);
-        }
-
-        // список аттрибутов групп для чтения
-        String groupFrom[] = new String[] {"groupName"};
-        // список ID view-элементов, в которые будет помещены аттрибуты групп
-        int groupTo[] = new int[] {android.R.id.text1};
-
-
-        // создаем коллекцию для коллекций элементов
-        childData = new ArrayList<ArrayList<Map<String, String>>>();
-
-        // создаем коллекцию элементов для первой группы
-        childDataItem = new ArrayList<Map<String, String>>();
-        // заполняем список аттрибутов для каждого элемента
-        for (String phone : phonesHTC) {
-            m = new HashMap<String, String>();
-            m.put("phoneName", phone); // название телефона
-            childDataItem.add(m);
-        }
-        // добавляем в коллекцию коллекций
-        childData.add(childDataItem);
-
-        // создаем коллекцию элементов для второй группы
-        childDataItem = new ArrayList<Map<String, String>>();
-        for (String phone : phonesSams) {
-            m = new HashMap<String, String>();
-            m.put("phoneName", phone);
-            childDataItem.add(m);
-        }
-        childData.add(childDataItem);
-
-        // создаем коллекцию элементов для третьей группы
-        childDataItem = new ArrayList<Map<String, String>>();
-        for (String phone : phonesLG) {
-            m = new HashMap<String, String>();
-            m.put("phoneName", phone);
-            childDataItem.add(m);
-
-
-
-        }
-        childData.add(childDataItem);
-
-        // список аттрибутов элементов для чтения
-        String childFrom[] = new String[] {"phoneName"};
-        // список ID view-элементов, в которые будет помещены аттрибуты элементов
-        int childTo[] = new int[] {android.R.id.text1};
-
-        SimpleExpandableListAdapter adapter = new SimpleExpandableListAdapter(
-                this,
-                groupData,
-                android.R.layout.simple_expandable_list_item_1,
-                groupFrom,
-                groupTo,
-                childData,
-                android.R.layout.simple_list_item_1,
-                childFrom,
-                childTo);
-
-        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        expandableListView.setAdapter(adapter);
-
-
-
-        colors[0] = Color.parseColor("#559966CC");
-        colors[1] = Color.parseColor("#55336699");
-
-        LinearLayout linLayout = (LinearLayout) findViewById(R.id.linLayout);
-
-        LayoutInflater ltInflater = getLayoutInflater();
-
-        for (int i = 0; i < name.length; i++) {
-            Log.d("myLogs", "i = " + i);
-            View item = ltInflater.inflate(R.layout.timetable_item, linLayout, false);
-            TextView tvName = (TextView) item.findViewById(R.id.lessonName);
-            tvName.setText(name[i]);
-            TextView tvPosition = (TextView) item.findViewById(R.id.lessonSubject);
-            tvPosition.setText("Должность: " + position[i]);
-            TextView tvSalary = (TextView) item.findViewById(R.id.lessonAuditory);
-            tvSalary.setText("Оклад: " + String.valueOf(salary[i]));
-            item.getLayoutParams().width = LayoutParams.MATCH_PARENT;
-            item.setBackgroundColor(colors[i % 2]);
-            linLayout.addView(item);
-        }
-
-
-
-
+        // открываем подключение к БД
+        db = new DB(this);
+        db.open();
+        // формируем столбцы сопоставления
+        String[] from = new String[] { DB.KEY_NAME, DB.KEY_PLACE, DB.KEY_SUBJECT, DB.KEY_START_TIME, DB.KEY_END_TIME, DB.KEY_DAY };
+        int[] to = new int[] { R.id.lessonName, R.id.lessonAuditory, R.id.lessonSubject, R.id.lessonStart, R.id.lessonEnd, R.id.lessonDay};
+        // создааем адаптер и настраиваем список
+        scAdapter = new SimpleCursorAdapter(this, R.layout.timetable_item, null, from, to, 0);
+        lvData = (ListView) findViewById(R.id.lvData);
+        lvData.setAdapter(scAdapter);
+        // добавляем контекстное меню к списку
+        registerForContextMenu(lvData);
+        // создаем лоадер для чтения данных
+        getSupportLoaderManager().initLoader(0, null, this);
+    }
+    // обработка нажатия кнопки
+    public void onButtonClick(View view) {
+        // добавляем запись
+        db.addRec("sometext " + (scAdapter.getCount() + 1), R.drawable.ic_launcher);
+        // получаем новый курсор с данными
+        getSupportLoaderManager().getLoader(0).forceLoad();
     }
 
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, CM_DELETE_ID, 0, R.string.delete_record);
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == CM_DELETE_ID) {
+            // получаем из пункта контекстного меню данные по пункту списка
+            AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item
+                    .getMenuInfo();
+            // извлекаем id записи и удаляем соответствующую запись в БД
+            db.delRec(acmi.id);
+            // получаем новый курсор с данными
+            getSupportLoaderManager().getLoader(0).forceLoad();
+            return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+    @Override
+    protected void onResume() {
+        // получаем новый курсор с данными
+        getSupportLoaderManager().getLoader(0).forceLoad();
+        super.onResume();
+        Log.d(LOG_TAG, "MainActivity: onResume()");
+    }
+    protected void onDestroy() {
+        super.onDestroy();
+        // закрываем подключение при выходе
+        db.close();
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle bndl) {
+        return new MyCursorLoader(this, db);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        scAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
+
+    static class MyCursorLoader extends CursorLoader {
+
+        DB db;
+
+        public MyCursorLoader(Context context, DB db) {
+            super(context);
+            this.db = db;
+        }
+
+        @Override
+        public Cursor loadInBackground() {
+            db.open();
+            Cursor cursor = db.getAllData();
+            try {
+                TimeUnit.SECONDS.sleep(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return cursor;
+        }
+
+    }
 }
 
 

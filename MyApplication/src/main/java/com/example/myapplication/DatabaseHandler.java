@@ -59,7 +59,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TIMETABLE_TABLE = "CREATE TABLE " + TABLE_TIMETABLE + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_ID + " INTEGER PRIMARY KEY ,"
                 + KEY_NAME + " TEXT,"
                 + KEY_PLACE + " TEXT,"
                 + KEY_TYPE + " TEXT,"
@@ -72,7 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TIMETABLE_TABLE);
 
         String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_ID + " INTEGER PRIMARY KEY ,"
                 + KEY_NAME + " TEXT,"
                 + KEY_TYPE + " TEXT,"
                 + KEY_SUBJECT + " TEXT,"
@@ -81,7 +81,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_TASKS_TABLE);
 
         String CREATE_SUBJECTS_TABLE = "CREATE TABLE " + TABLE_SUBJECTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_ID + " INTEGER PRIMARY KEY ,"
                 + KEY_NAME + " TEXT,"
                 + KEY_LECTOR + " TEXT,"
                 + KEY_LECTOR_CONTACTS + " TEXT"+ ")";

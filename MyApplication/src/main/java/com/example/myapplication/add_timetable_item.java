@@ -85,13 +85,14 @@ public class add_timetable_item extends Activity implements TextWatcher {
                                        int position, long id) {
                 // показываем позиция нажатого элемента
 //                Toast.makeText(getBaseContext(), "Position = " + position, Toast.LENGTH_SHORT).show();
-            }
+                }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-            }
+                }
 
-    });
-    }
+            }
+        );
+}
 
 
 

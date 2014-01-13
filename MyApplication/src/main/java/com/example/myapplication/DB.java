@@ -11,24 +11,67 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB {
+    // переменные для query
+    String[] columns = null;
+    String selection = null;
+    String[] selectionArgs = null;
+    String groupBy = null;
+    String having = null;
+    String orderBy = null;
 
     public static final String DB_NAME = "App_database";
     public static final int DB_VERSION = 1;
     public static final String DB_TABLE = "timetable";
 
+//    public static final String KEY_ID = "_id";
+//    public static final String KEY_NAME = "name";
+//    public static final String KEY_TYPE = "type";
+//    public static final String KEY_SUBJECT = "subject";
+//    public static final String KEY_PLACE = "place";
+//    public static final String KEY_DAY = "day";
+//    public static final String KEY_START_TIME = "start_time";
+//    public static final String KEY_END_TIME = "end_time";
+//    public static final String KEY_WEEK = "week";
+//    public static final String KEY_SUBMIT_DATE = "submit_date";
+//    public static final String KEY_COMMENT = "comment";
+
+    // All Static variables
+    // Database Version
+    private static final int DATABASE_VERSION = 1;
+    // Database Name
+    private static final String DATABASE_NAME = "App_database";
+    // Tables name
+    public static final String TABLE_TIMETABLE = "timetable";
+    public static final String TABLE_TASKS = "tasks";
+    public static final String TABLE_SUBJECTS = "subjects";
+    // Tables Columns names
+    // Tasks Table
     public static final String KEY_ID = "_id";
     public static final String KEY_NAME = "name";
     public static final String KEY_TYPE = "type";
     public static final String KEY_SUBJECT = "subject";
+    public static final String KEY_SUBMIT_DATE = "submit_date";
+    public static final String KEY_COMMENT = "comment";
+    // Subjects Table
+    /*private static final String KEY_ID = "id";
+    private static final String KEY_NAME = "name";*/
+    public static final String KEY_LECTOR = "lector";
+    public static final String KEY_LECTOR_CONTACTS = "lector_contacts";
+    // Timetable table
+    /*private static final String KEY_ID = "id";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_TYPE = "name";
+    private static final String KEY_SUBJECT = "name";*/
     public static final String KEY_PLACE = "place";
     public static final String KEY_DAY = "day";
     public static final String KEY_START_TIME = "start_time";
     public static final String KEY_END_TIME = "end_time";
     public static final String KEY_WEEK = "week";
 
+
     private static final String DB_CREATE =
             "create table " + DB_TABLE + "("
-                    + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + KEY_ID + " INTEGER PRIMARY KEY,"
                     + KEY_NAME + " TEXT,"
                     + KEY_PLACE + " TEXT,"
                     + KEY_TYPE + " TEXT,"
@@ -37,6 +80,32 @@ public class DB {
                     + KEY_START_TIME + " TIME,"
                     + KEY_END_TIME + " TIME,"
                     + KEY_WEEK + " TEXT" + ")";
+
+    private static final String CREATE_TIMETABLE_TABLE = "CREATE TABLE " + TABLE_TIMETABLE + "("
+            + KEY_ID + " INTEGER PRIMARY KEY ,"
+            + KEY_NAME + " TEXT,"
+            + KEY_PLACE + " TEXT,"
+            + KEY_TYPE + " TEXT,"
+            + KEY_SUBJECT + " TEXT,"
+            + KEY_DAY + " TEXT,"
+            + KEY_START_TIME + " TIME,"
+            + KEY_END_TIME + " TIME,"
+            + KEY_WEEK + " TEXT" + ")";
+
+    private static final  String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY ,"
+            + KEY_NAME + " TEXT,"
+            + KEY_TYPE + " TEXT,"
+            + KEY_SUBJECT + " TEXT,"
+            + KEY_SUBMIT_DATE + " DATE,"
+            + KEY_COMMENT + " TEXT" + ")";
+
+    private static final String  CREATE_SUBJECTS_TABLE = "CREATE TABLE " + TABLE_SUBJECTS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY ,"
+            + KEY_NAME + " TEXT,"
+            + KEY_LECTOR + " TEXT,"
+            + KEY_LECTOR_CONTACTS + " TEXT"+ ")";
+
 
     private final Context mCtx;
 
@@ -61,9 +130,19 @@ public class DB {
 
     // получить все данные из таблицы DB_TABLE
     public Cursor getAllData() {
+        orderBy = "day";// немного сортировки, но увы по алфавиту
         return mDB.query(DB_TABLE, null, null, null, null, null, null);
     }
 
+    // получить все данные из таблицы DB_TABLE
+    public Cursor getByDay(String sDay) {
+        selection = "day == ?";
+        selectionArgs = new String[] { sDay };
+        return mDB.query(DB_TABLE, null, selection, selectionArgs, null, null, null);
+    }
+    public Cursor getTasks() {
+        return mDB.query(TABLE_TASKS, null, null, null, null, null, null);
+    }
     // добавить запись в DB_TABLE
     public void addRec(String txt, int img) {
         ContentValues cv = new ContentValues();
@@ -94,20 +173,12 @@ public class DB {
         // создаем и заполняем БД
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DB_CREATE);
-
+//            db.execSQL(DB_CREATE);
+            db.execSQL(CREATE_TIMETABLE_TABLE);
+            db.execSQL(CREATE_TASKS_TABLE);
+            db.execSQL(CREATE_SUBJECTS_TABLE);
             ContentValues cv = new ContentValues();
-            for (int i = 1; i < 5; i++) {
-                cv.put(KEY_NAME, "sometext " + i);
-                cv.put(KEY_PLACE, "sometext " + i);
-                cv.put(KEY_TYPE, "sometext " + i);
-                cv.put(KEY_SUBJECT, "sometext " + i);
-                cv.put(KEY_DAY, "sometext " + i);
-                cv.put(KEY_START_TIME, "sometext " + i);
-                cv.put(KEY_END_TIME, "sometext " + i);
-                cv.put(KEY_WEEK, "sometext " + i);
-                db.insert(DB_TABLE, null, cv);
-            }
+
         }
 
         @Override
